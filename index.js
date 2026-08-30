@@ -1,6 +1,12 @@
 const express = require('express');
 const app = express()
 const cors = require('cors');
+const { Pool } = require('pg');
+
+const pg = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {rejectUnauthorized: false}
+})
 
 app.use(express.json())
 
