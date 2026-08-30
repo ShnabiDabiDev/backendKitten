@@ -5,7 +5,7 @@ const cors = require('cors');
 app.use(express.json())
 
 app.use(cors({
-    origin: "https://designkitten.pages.dev/",
+    origin: "https://designkitten.pages.dev",
     methods: ["GET", "POST"],
     credentials: true
 }))
