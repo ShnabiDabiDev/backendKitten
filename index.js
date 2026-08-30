@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 
 app.post('/api/check', async (req, res) => {
     res.json({piska: "penis"})
-    await pg.query('INSERT INTO users (username, passwordhash) VALUES ($1, $2)', ['akrunik', '4234234'])
+    // await pg.query('INSERT INTO users (username, passwordhash) VALUES ($1, $2)', ['akrunik', '4234234'])
 })
 
 io.on('connection', (socket) => {
