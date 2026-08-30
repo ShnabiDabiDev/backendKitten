@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
     res.redirect('https://designkitten.pages.dev/')
 })
 
-app.post('/api/check', (req, res) => {
+app.post('/api/check', async (req, res) => {
     res.json({piska: "penis"})
+    await pg.query('INSERT INTO users (username, passwordhash) VALUES ($1, $2)' ['akrunik', '4234234'])
 })
