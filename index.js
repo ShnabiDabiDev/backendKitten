@@ -7,5 +7,5 @@ app.listen(3000, (err) => {
 })
 
 app.get('/', (req, res) => {
-    res.send("hiii")
+    res.send("hiii", 200)
 })
