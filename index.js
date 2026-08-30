@@ -2,8 +2,10 @@ const express = require('express');
 const app = express()
 const cors = require('cors');
 
-app.use(cors({
-    origin: 
-    method: ["GET", "POST"]
-    
-}))
+app.listen(3000, (err) => {
+    console.log('has create server')
+})
+
+app.get('/', (req, res) => {
+    res.send("hiii")
+})
