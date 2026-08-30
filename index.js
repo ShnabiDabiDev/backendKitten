@@ -13,5 +13,5 @@ app.listen(3000, (err) => {
 })
 
 app.get('/', (req, res) => {
-    
+    res.redirect('https://designkitten.pages.dev/')
 })
