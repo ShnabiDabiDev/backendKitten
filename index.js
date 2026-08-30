@@ -19,5 +19,5 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/check', (req, res) => {
-    res.json('penis')
+    res.json({piska: "penis"})
 })
