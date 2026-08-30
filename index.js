@@ -7,6 +7,8 @@ const http = require('http')
 
 const server = http.createServer(app)
 
+server.listen(3000)
+
 const pg = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: {rejectUnauthorized: false}
