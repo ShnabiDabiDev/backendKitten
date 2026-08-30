@@ -2,10 +2,21 @@ const express = require('express');
 const app = express()
 const cors = require('cors');
 const { Pool } = require('pg');
+const { Server } = require('socket.io');
+const http = require('http')
+
+const server = http.createServer(app)
 
 const pg = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: {rejectUnauthorized: false}
+})
+
+const io = new Server(server, {
+    cors: {
+        origin: "https://designkitten.pages.dev",
+        methods: ["GET", "POST"]
+    }
 })
 
 app.use(express.json())
@@ -27,4 +38,8 @@ app.get('/', (req, res) => {
 app.post('/api/check', async (req, res) => {
     res.json({piska: "penis"})
     await pg.query('INSERT INTO users (username, passwordhash) VALUES ($1, $2)', ['akrunik', '4234234'])
+})
+
+io.on('connection', (socket) => {
+    socket.emit('check')
 })
