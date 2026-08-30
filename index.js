@@ -41,5 +41,7 @@ app.post('/api/check', async (req, res) => {
 })
 
 io.on('connection', (socket) => {
-    socket.emit('check')
+    socket.emit('check', {
+
+    })
 })
