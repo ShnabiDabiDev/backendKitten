@@ -16,7 +16,7 @@ const pg = new Pool({
 
 const sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY)
 
-const { data, error } = await sb.storage
+const { data, error } = sb.storage
   .from('avatars')
   .list();
 
