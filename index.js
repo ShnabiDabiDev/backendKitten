@@ -4,7 +4,7 @@ const cors = require('cors');
 const { Pool } = require('pg');
 const { Server } = require('socket.io');
 const http = require('http')
-const createClient = require('@supabase/supabase-js');
+const { createClient } = require('@supabase/supabase-js');
 const server = http.createServer(app)
 
 server.listen(3000)
