@@ -4,7 +4,7 @@ const cors = require('cors');
 const { Pool } = require('pg');
 const { Server } = require('socket.io');
 const http = require('http')
-
+const createClient = require('@supabase/supabase-js');
 const server = http.createServer(app)
 
 server.listen(3000)
@@ -13,6 +13,14 @@ const pg = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: {rejectUnauthorized: false}
 })
+
+const sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY)
+
+const { data, error } = await sb.storage
+  .from('avatars')
+  .list();
+
+console.log(data, error);
 
 const io = new Server(server, {
     cors: {
