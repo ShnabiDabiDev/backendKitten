@@ -20,10 +20,7 @@ console.log(process.env.SUPABASE_URL);
 console.log('heh')
 
 async function test() {
-    const { data, error } = await sb.storage.from('avatars').list('');
-    console.log("ROOT:", data, error);
-
-    const { data: data2, error: error2 } = await sb.storage.from('avatars').list('avatars');
+    const { data: data2, error: error2 } = await sb.storage.from('avatars').list('images');
     console.log("FOLDER avatars:", data2, error2);
 }
 
