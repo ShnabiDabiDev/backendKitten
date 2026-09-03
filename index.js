@@ -17,8 +17,11 @@ const pg = new Pool({
 const sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY)
 
 async function test() {
-    const { data, error } = await sb.storage.from('avatars').list();
-    console.log(data, error);
+    const { data, error } = await sb.storage.from('avatars').list('');
+    console.log("ROOT:", data, error);
+
+    const { data: data2, error: error2 } = await sb.storage.from('avatars').list('avatars');
+    console.log("FOLDER avatars:", data2, error2);
 }
 
 test();
