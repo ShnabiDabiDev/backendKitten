@@ -14,7 +14,10 @@ const pg = new Pool({
     ssl: {rejectUnauthorized: false}
 })
 
-const sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY)
+const sb = new createClient(process.env.SUPABASE_URL, {
+    apikey: process.env.SUPABASE_SECRET_KEY,
+    Authorization: `Bearer ${process.env.SUPABASE_SECRET_KEY}`,
+})
 
 console.log(process.env.SUPABASE_URL);
 console.log('heh')
