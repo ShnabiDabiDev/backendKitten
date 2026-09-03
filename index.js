@@ -4,7 +4,7 @@ const cors = require('cors');
 const { Pool } = require('pg');
 const { Server } = require('socket.io');
 const http = require('http')
-import { createClient } from '@supabase/storage-js'
+const { createClient } = require('@supabase/supabase-js');
 const server = http.createServer(app)
 
 server.listen(3000)
@@ -14,9 +14,9 @@ const pg = new Pool({
     ssl: {rejectUnauthorized: false}
 })
 
-const sb = new createClient(process.env.SUPABASE_URL, {
+const sb = createClient(process.env.SUPABASE_URL, {
     apikey: process.env.SUPABASE_SECRET_KEY,
-    Authorization: `Bearer ${process.env.SUPABASE_SECRET_KEY}`,
+    Authorization: `Bearer ${process.env.SUPABASE_SECRET_KEY}`
 })
 
 console.log(process.env.SUPABASE_URL);
