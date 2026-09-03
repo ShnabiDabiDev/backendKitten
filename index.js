@@ -16,10 +16,12 @@ const pg = new Pool({
 
 const sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY)
 
-const { data, error } = sb.storage
-  .from('avatars')
-  .list();
+const test = async () => {
+  const { data, error } = await supabase.storage.from('avatars').list();
+  console.log(data, error);
+};
 
+test();
   
 console.log(data, error + "Update allz");
 
