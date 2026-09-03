@@ -22,8 +22,6 @@ const test = async () => {
 };
 
 test();
-  
-console.log(data, error + "Update allz");
 
 const io = new Server(server, {
     cors: {
