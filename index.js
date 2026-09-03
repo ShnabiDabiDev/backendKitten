@@ -20,7 +20,8 @@ const { data, error } = sb.storage
   .from('avatars')
   .list();
 
-console.log(data, error + "Update all");
+  
+console.log(data, error + "Update allz");
 
 const io = new Server(server, {
     cors: {
