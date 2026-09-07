@@ -56,8 +56,8 @@ app.post('/api/check', async (req, res) => {
     // await pg.query('INSERT INTO users (username, passwordhash) VALUES ($1, $2)', ['akrunik', '4234234'])
 })
 
-app.post('/api/uploadavatar', upload.single('avatar'), async (req, res) => {
-   const file = req.file
+app.post('/api/uploadavatar', async (req, res) => {
+//    const file = req.file
    const storage = sb.storage
    const bucket = storage.from('avatars')
 
