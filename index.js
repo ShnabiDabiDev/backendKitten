@@ -20,8 +20,8 @@ console.log(process.env.SUPABASE_URL);
 console.log('heh')
 
 async function test() {
-    const { data: data2, error: error2 } = await sb.storage.from('avatars').list('images');
-    console.log("FOLDER avatars:", data2, error2);
+    const storage = sb.storage
+    const bucket = storage.from('images')
 }
 
 test();
@@ -54,8 +54,17 @@ app.post('/api/check', async (req, res) => {
     // await pg.query('INSERT INTO users (username, passwordhash) VALUES ($1, $2)', ['akrunik', '4234234'])
 })
 
+app.post('/api/upload_avatar', async (req, res) => {
+   const file = req.file
+   console.log(file)
+})
+
 io.on('connection', (socket) => {
     socket.emit('check', {
 
+    })
+
+    socket.on('upload_avatar', (data) => {
+        
     })
 })
