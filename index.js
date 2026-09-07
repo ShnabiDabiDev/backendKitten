@@ -6,8 +6,14 @@ const { Server } = require('socket.io');
 const http = require('http')
 const { createClient } = require('@supabase/supabase-js');
 const server = http.createServer(app)
+const multer = require('multer')
 
 server.listen(3000)
+
+const upload = multer({ 
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 2 * 1024 * 1024 }
+});
 
 const pg = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -41,10 +47,6 @@ app.use(cors({
     credentials: true
 }))
 
-app.listen(3000, (err) => {
-    console.log('has create server')
-})
-
 app.get('/', (req, res) => {
     res.redirect('https://designkitten.pages.dev/')
 })
@@ -54,7 +56,7 @@ app.post('/api/check', async (req, res) => {
     // await pg.query('INSERT INTO users (username, passwordhash) VALUES ($1, $2)', ['akrunik', '4234234'])
 })
 
-app.post('/api/upload_avatar', async (req, res) => {
+app.post('/api/upload-avatar', upload.single('avatar'), async (req, res) => {
    const file = req.file
    const storage = sb.storage
    const bucket = storage.from('avatars')
