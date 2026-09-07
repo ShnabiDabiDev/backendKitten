@@ -56,7 +56,18 @@ app.post('/api/check', async (req, res) => {
 
 app.post('/api/upload_avatar', async (req, res) => {
    const file = req.file
-   console.log(file)
+   const storage = sb.storage
+   const bucket = storage.from('avatars')
+
+   res.json({
+        success: true,
+        message: 'Файл получен!',
+        fileInfo: {
+            name: file.originalname,
+            size: file.size,
+            type: file.mimetype
+        }
+    });
 })
 
 io.on('connection', (socket) => {
