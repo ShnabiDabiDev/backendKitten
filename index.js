@@ -58,8 +58,8 @@ app.post('/api/check', async (req, res) => {
 
 app.post('/api/uploadavatar', async (req, res) => {
 //    const file = req.file
-   const storage = sb.storage
-   const bucket = storage.from('avatars')
+//    const storage = sb.storage
+//    const bucket = storage.from('avatars')
 
    res.json({
         // success: true,
