@@ -63,7 +63,7 @@ app.post('/api/uploadavatar', async (req, res) => {
 
    res.json({
         // success: true,
-        message: 'Файл получен!',
+        message: 'Файл получен!'
         // fileInfo: {
         //     name: file.originalname,
         //     size: file.size,
