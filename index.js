@@ -62,7 +62,7 @@ app.post('/api/uploadavatar', upload.single('avatar'), async (req, res) => {
    const storage = sb.storage
    const bucket = await storage.from('avatars')
    const ext = file.originalname.split('.').pop()
-   const filepath = `${username}.${ext}`
+   const filepath = `images/${username}.${ext}`
 
    const { data: files, error: listError } = await sb
     .storage
