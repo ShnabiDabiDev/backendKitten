@@ -98,8 +98,7 @@ app.post('/api/uploadavatar', upload.single('avatar'), async (req, res) => {
             name: file.originalname,
             size: file.size,
             type: file.mimetype
-        },
-        allFiles: files
+        }
     });
 })
 
