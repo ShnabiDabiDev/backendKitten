@@ -60,10 +60,11 @@ app.post('/api/uploadavatar', upload.single('avatar'), async (req, res) => {
    const file = req.file
    const storage = sb.storage
    const bucket = storage.from('avatars')
-
+   
    res.json({
         success: true,
         message: 'Файл получен!',
+        username: req.body.username,
         fileInfo: {
             name: file.originalname,
             size: file.size,
