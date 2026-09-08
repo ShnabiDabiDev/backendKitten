@@ -57,16 +57,14 @@ app.post('/api/check', async (req, res) => {
 })
 
 app.post('/api/uploadavatar', upload.single('avatar'), async (req, res) => {
+   const username = req.body.username
    const file = req.file
    const storage = await sb.storage
    const bucket = await storage.from('avatars')
    const ext = file.originalname.split('.').pop()
    const filepath = `${username}.${ext}`
 
-   const username = req.body.username
-
    const {files, catchError} = await bucket.list("images")
-   
    if (catchError) {
        return res.status(500).json({ success: false, message: 'Ошибка при получении файлов' });
    }
