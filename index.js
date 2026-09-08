@@ -59,33 +59,41 @@ app.post('/api/check', async (req, res) => {
 app.post('/api/uploadavatar', upload.single('avatar'), async (req, res) => {
    const username = req.body.username
    const file = req.file
-   const storage = await sb.storage
+   const storage = sb.storage
    const bucket = await storage.from('avatars')
    const ext = file.originalname.split('.').pop()
    const filepath = `${username}.${ext}`
 
-   const {files, catchError} = await bucket.list("images")
-   if (catchError) {
+   const { data: files, error: listError } = await sb
+    .storage
+    .from('avatars')
+    .list('images');
+   if (listError) {
        return res.status(500).json({ success: false, message: 'Ошибка при получении файлов' });
    }
 
    const exists = files.some(f => f.name === `${username}.${ext}`);
 
    if (exists) {
-       const { error } = await bucket.update(filepath, file.buffer, {
-           contentType: file.mimetype,
-           upsert: true
-       });
-       if (error) {
-           return res.status(500).json({ success: false, message: 'Ошибка при загрузке файла' });
-       }
-   }
+        const { error } = await sb.storage
+            .from('avatars')
+            .update(filepath, file.buffer, {
+            contentType: file.mimetype,
+            upsert: true
+            });
+
+        if (error) {
+            return res.status(500).json({ success: false, message: 'Ошибка при загрузке файла' });
+        }
+    }
 
    if (!exists) {
-       const { error } = await bucket.upload(filepath, file.buffer, {
-           contentType: file.mimetype,
-           upsert: true
-       });
+       const { error } = await sb.storage
+           .from('avatars')
+           .upload(filepath, file.buffer, {
+               contentType: file.mimetype,
+               upsert: true
+           });
        if (error) {
            return res.status(500).json({ success: false, message: 'Ошибка при загрузке файла' });
        }
