@@ -59,55 +59,28 @@ app.post('/api/check', async (req, res) => {
 app.post('/api/uploadavatar', upload.single('avatar'), async (req, res) => {
    const username = req.body.username
    const file = req.file
-   const storage = sb.storage
-   const bucket = await storage.from('avatars')
-   const ext = file.originalname.split('.').pop()
-   const filepath = `images/${username}.${ext}`
+   const filepath = `images/${username}/avatar`
 
-   const { data: files, error: listError } = await sb
-    .storage
-    .from('avatars')
-    .list('images');
-   if (listError) {
-       return res.status(500).json({ success: false, message: 'Ошибка при получении файлов' });
-   }
+    const allowedTypes = [
+        'image/jpeg',
+        'image/png',
+        'image/webp'
+    ]
 
-   const exists = files.some(f => f.name === `${username}.${ext}`);
-
-   if (exists) {
-        const { error } = await sb.storage
-            .from('avatars')
-            .update(filepath, file.buffer, {
+    if (allowedTypes.includes(file.mimetype)) {
+        const {data, error} = await sb.storage.from('avatars').upload(filepath, file.buffer, {
             contentType: file.mimetype,
             upsert: true
-            });
-
-        res.json({
-            success: true,
-            message: 'Exists. Update!'
-        });
+        })
 
         if (error) {
-            return res.status(500).json({ success: false, message: 'Ошибка при загрузке файла' });
-        }    
-    }
+            res.status(400).json({ error: error.message })
+        }
 
-    if (!exists) {
-        const { error } = await sb.storage
-            .from('avatars')
-            .upload(filepath, file.buffer, {
-            contentType: file.mimetype,
-            upsert: true
-            });
-
-            res.json({
-                success: true,
-                message: 'Upload!'
-            });
-
-        if (error) {
-            return res.status(500).json({ success: false, message: 'Ошибка при загрузке файла' });
-        }   
+        res.status(200).json({data: data})
+        
+    } else {
+        res.status(400).json({ error: 'Invalid file type' })
     }
 })
 
