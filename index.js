@@ -70,6 +70,7 @@ app.post('/api/uploadavatar', upload.single('avatar'), async (req, res) => {
     if (allowedTypes.includes(file.mimetype)) {
         const {data, error} = await sb.storage.from('avatars').upload(filepath, file.buffer, {
             contentType: file.mimetype,
+            cacheControl: '0',
             upsert: true
         })
 
@@ -77,8 +78,9 @@ app.post('/api/uploadavatar', upload.single('avatar'), async (req, res) => {
             res.status(400).json({ error: error.message })
         }
 
+
+
         res.status(200).json({data: data})
-        
     } else {
         res.status(400).json({ error: 'Invalid file type' })
     }
