@@ -82,32 +82,33 @@ app.post('/api/uploadavatar', upload.single('avatar'), async (req, res) => {
             upsert: true
             });
 
+        res.json({
+            success: true,
+            message: 'Exists. Update!'
+        });
+
         if (error) {
             return res.status(500).json({ success: false, message: 'Ошибка при загрузке файла' });
-        }
+        }    
     }
 
-   if (!exists) {
-       const { error } = await sb.storage
-           .from('avatars')
-           .upload(filepath, file.buffer, {
-               contentType: file.mimetype,
-               upsert: true
-           });
-       if (error) {
-           return res.status(500).json({ success: false, message: 'Ошибка при загрузке файла' });
-       }
-   }
+    if (!exists) {
+        const { error } = await sb.storage
+            .from('avatars')
+            .upload(filepath, file.buffer, {
+            contentType: file.mimetype,
+            upsert: true
+            });
 
-   res.json({
-        success: true,
-        message: 'Файл получен!',
-        fileInfo: {
-            name: file.originalname,
-            size: file.size,
-            type: file.mimetype
-        }
-    });
+            res.json({
+                success: true,
+                message: 'Upload!'
+            });
+
+        if (error) {
+            return res.status(500).json({ success: false, message: 'Ошибка при загрузке файла' });
+        }   
+    }
 })
 
 io.on('connection', (socket) => {
