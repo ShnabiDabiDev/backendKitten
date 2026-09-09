@@ -56,6 +56,22 @@ app.post('/api/check', async (req, res) => {
     // await pg.query('INSERT INTO users (username, passwordhash) VALUES ($1, $2)', ['akrunik', '4234234'])
 })
 
+app.post('/api/register', async (req, res) => {
+    const {name, password} = req.body
+
+    const existingUser = await pg.query('SELECT * FROM users WHERE username = $1', [name])
+    
+    if (existingUser.rows.length > 0) {
+        return res.status(400).json({ error: 'User already exists' })
+    }
+
+    await pg.query('INSERT INTO users (username, passwordhash) VALUES ($1, $2)', [name, password])
+
+    res.json({
+        message: "User registered successfully"
+    })
+})
+
 app.post('/api/uploadavatar', upload.single('avatar'), async (req, res) => {
    const username = req.body.username
    const file = req.file
